@@ -1,0 +1,56 @@
+account_balance = 25000.8333
+correct_pin = "1883"
+while True:
+    print("\n--- Welcome to the Simple ATM --- ")
+    user_pin = input("Please enter your 4-digit PIN: ")
+    if user_pin == correct_pin:
+        print("PIN accepted. Please choose an option:")
+        print("1. Check Balance")
+        print("2. Deposit")
+        print("3. Withdraw")
+        print("4. Exit")
+        choice = input("Enter your choice (1-4): ")
+        if choice == "1":
+            print(f"Your current balance is: ${account_balance:.2f}")
+        elif choice == "2":
+            amount_str = input("Enter amount to deposit: $")
+            is_valid_deposit = True
+            for char in amount_str:
+                if not ('0' <= char <= '9' or char == '.'):
+                    is_valid_deposit = False
+                    break
+            if is_valid_deposit and len(amount_str) > 0 and amount_str.count('.') <= 1:
+                deposit_amount = float(amount_str)
+                if deposit_amount > 0:
+                    account_balance = account_balance + deposit_amount
+                    print(f"${deposit_amount:.2f} deposited successfully. New balance: ${account_balance:.2f}")
+                else:
+                    print("Deposit amount must be positive.")
+            else:
+                print("Invalid deposit amount. Please enter a number.")
+        elif choice == "3":
+            amount_str = input("Enter amount to withdraw: $")
+            is_valid_withdrawal = True
+            for char in amount_str:
+                if not ('0' <= char <= '9' or char == '.'):
+                    is_valid_withdrawal = False
+                    break
+            if is_valid_withdrawal and len(amount_str) > 0 and amount_str.count('.') <= 1:
+                withdrawal_amount = float(amount_str)
+                if withdrawal_amount > 0:
+                    if withdrawal_amount <= account_balance:
+                        account_balance = account_balance - withdrawal_amount
+                        print(f"${withdrawal_amount:.2f} withdrawn successfully. New balance: ${account_balance:.2f}")
+                    else:
+                        print("Insufficient balance. Cannot withdraw that amount.")
+                else:
+                    print("Withdrawal amount must be positive.")
+            else:
+                print("Invalid withdrawal amount. Please enter a number.")
+        elif choice == "4":
+            print("Thank you for using the Simple ATM. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select 1, 2, 3, or 4.")
+    else:
+        print("Incorrect PIN. Please try again.")
